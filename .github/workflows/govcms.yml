@@ -10,6 +10,7 @@ on:
 
 jobs:
   govcms7:
+    name: GovCMS 7
     runs-on: ubuntu-latest
     env:
       DRUPAL_VERSION: 7
@@ -27,6 +28,7 @@ jobs:
       - name: Remove GovCMS
         run: docker-compose -p govcms7 -f docker-compose.yml rm
   govcms8:
+    name: GovCMS 8
     runs-on: ubuntu-latest
     env:
       DRUPAL_VERSION: 8
@@ -45,6 +47,7 @@ jobs:
       - name: Remove GovCMS
         run: docker-compose -p govcms8 -f docker-compose.yml rm
   govcms9:
+    name: GovCMS 9
     runs-on: ubuntu-latest
     env:
       DRUPAL_VERSION: 9
