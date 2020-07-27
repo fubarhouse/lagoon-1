@@ -20,13 +20,13 @@ jobs:
       CLI_IMAGE: govcms7
     steps:
       - name: Build GovCMS
-        run: docker-compose -p govcms7  -f docker-compose.yml build --no-cache
+        run: docker-compose -p govcms7 build --no-cache
       - name: Start GovCMS
-        run: docker-compose -p govcms7 -f docker-compose.yml up -d
+        run: docker-compose -p govcms7 up -d
       - name: Stop GovCMS
-        run: docker-compose -p govcms7 -f docker-compose.yml down
+        run: docker-compose -p govcms7 down
       - name: Remove GovCMS
-        run: docker-compose -p govcms7 -f docker-compose.yml rm
+        run: docker-compose -p govcms7 rm
   govcms8:
     name: GovCMS 8
     runs-on: ubuntu-latest
@@ -39,13 +39,13 @@ jobs:
       CLI_IMAGE: govcms8
     steps:
       - name: Build GovCMS
-        run: docker-compose -p govcms8 -f docker-compose.yml build --no-cache
+        run: docker-compose -p govcms8 build --no-cache
       - name: Start GovCMS
-        run: docker-compose -p govcms8 -f docker-compose.yml up -d
+        run: docker-compose -p govcms8 up -d
       - name: Stop GovCMS
-        run: docker-compose -p govcms8 -f docker-compose.yml down
+        run: docker-compose -p govcms8 down
       - name: Remove GovCMS
-        run: docker-compose -p govcms8 -f docker-compose.yml rm
+        run: docker-compose -p govcms8 rm
   govcms9:
     name: GovCMS 9
     runs-on: ubuntu-latest
@@ -57,10 +57,10 @@ jobs:
       CLI_IMAGE: govcms9
     steps:
       - name: Build GovCMS
-        run: docker-compose -p govcms9 -f docker-compose.yml build --no-cache
+        run: docker-compose -p govcms9 build --no-cache
       - name: Start GovCMS
-        run: docker-compose -p govcms9 -f docker-compose.yml up -d
+        run: docker-compose -p govcms9 up -d
       - name: Stop GovCMS
-        run: docker-compose -p govcms9 -f docker-compose.yml down
+        run: docker-compose -p govcms9 down
       - name: Remove GovCMS
-        run: docker-compose -p govcms9 -f docker-compose.yml rm
+        run: docker-compose -p govcms9 rm
