@@ -19,6 +19,8 @@ jobs:
       DOCKERHUB_NAMESPACE: govcms7lagoon
       CLI_IMAGE: govcms7
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Build GovCMS
         run: docker-compose -p govcms7 build --no-cache
       - name: Start GovCMS
@@ -38,6 +40,8 @@ jobs:
       DOCKERHUB_NAMESPACE: govcms8lagoon
       CLI_IMAGE: govcms8
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Build GovCMS
         run: docker-compose -p govcms8 build --no-cache
       - name: Start GovCMS
@@ -56,6 +60,8 @@ jobs:
       DOCKERHUB_NAMESPACE: govcms9lagoon
       CLI_IMAGE: govcms9
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Build GovCMS
         run: docker-compose -p govcms9 build --no-cache
       - name: Start GovCMS
