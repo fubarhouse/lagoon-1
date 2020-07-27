@@ -1,0 +1,11 @@
+{
+    "name": "govcms/allowlist",
+    "description": "The allowlist of modules and third party packages in GovCMS Drupal Distribution.",
+    "keywords": ["GovCMS"],
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "drupal/devel": "4.0",
+        "drupal/shield": "1.4"
+    }
+}

@@ -1,0 +1,47 @@
+name: GovCMS
+type: profile
+description: 'A GovCMS Drupal Distribution for government and the public sector in Australia.'
+project: govcms
+core_version_requirement: ^9
+version: '2.x-dev'
+
+distribution:
+  name: GovCMS
+  langcode: en
+
+install:
+  - big_pipe
+  - block_content
+  - ckeditor
+  - config
+  - contextual
+  - datetime_range
+  - dynamic_page_cache
+  - field_layout
+  - field_ui
+  - help
+  - layout_builder
+  - media_library
+  - menu_ui
+  - node
+  - options
+  - page_cache
+  - path
+  - quickedit
+  - rdf
+  - settings_tray
+  - shortcut
+  - taxonomy
+  - telephone
+  - toolbar
+  - views
+  - views_ui
+
+dependencies:
+  - node
+  - block
+  - views
+
+themes:
+  - govcms_bartik
+  - claro

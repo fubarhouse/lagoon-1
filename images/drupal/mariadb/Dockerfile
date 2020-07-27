@@ -1,0 +1,2 @@
+ARG LAGOON_IMAGE_VERSION
+FROM amazeeio/mariadb-drupal:${LAGOON_IMAGE_VERSION}

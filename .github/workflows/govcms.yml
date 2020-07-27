@@ -1,0 +1,63 @@
+name: govcms
+
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - '*'
+  pull_request:
+
+jobs:
+  7.x:
+    runs-on: ubuntu-latest
+    env:
+      DRUPAL_VERSION: 7
+      SOLR_VERSION: 6.6.x
+      GOVCMS_PROJECT_VERSION: 7.x-3.x
+      DOCKERHUB_NAMESPACE: govcms7lagoon
+      CLI_IMAGE: govcms7
+    steps:
+      - name: Build GovCMS
+        run: docker-compose -p govcms7  -f docker-compose.yml build --no-cache
+      - name: Start GovCMS
+        run: docker-compose -p govcms7 -f docker-compose.yml up -d
+      - name: Stop GovCMS
+        run: docker-compose -p govcms7 -f docker-compose.yml down
+      - name: Remove GovCMS
+        run: docker-compose -p govcms7 -f docker-compose.yml rm
+  8.x:
+    runs-on: ubuntu-latest
+    env:
+      DRUPAL_VERSION: 8
+      SOLR_VERSION: 7.5.x
+      GOVCMS_PROJECT_VERSION: 1.4.0
+      DRUPAL_CORE_VERSION: 8.8.6
+      DOCKERHUB_NAMESPACE: govcms8lagoon
+      CLI_IMAGE: govcms8
+    steps:
+      - name: Build GovCMS
+        run: docker-compose -p govcms8 -f docker-compose.yml build --no-cache
+      - name: Start GovCMS
+        run: docker-compose -p govcms8 -f docker-compose.yml up -d
+      - name: Stop GovCMS
+        run: docker-compose -p govcms8 -f docker-compose.yml down
+      - name: Remove GovCMS
+        run: docker-compose -p govcms8 -f docker-compose.yml rm
+  9.x:
+    runs-on: ubuntu-latest
+    env:
+      DRUPAL_VERSION: 9
+      SOLR_VERSION: 7.5.x
+      DRUPAL_CORE_VERSION: 9.0.2
+      DOCKERHUB_NAMESPACE: govcms9lagoon
+      CLI_IMAGE: govcms9
+    steps:
+      - name: Build GovCMS
+        run: docker-compose -p govcms9 -f docker-compose.yml build --no-cache
+      - name: Start GovCMS
+        run: docker-compose -p govcms9 -f docker-compose.yml up -d
+      - name: Stop GovCMS
+        run: docker-compose -p govcms9 -f docker-compose.yml down
+      - name: Remove GovCMS
+        run: docker-compose -p govcms9 -f docker-compose.yml rm

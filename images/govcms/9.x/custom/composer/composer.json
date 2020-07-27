@@ -1,0 +1,5 @@
+{
+  "name": "govcms/custom",
+  "description": "The allowlist of modules and third party packages in GovCMS Drupal Distribution.",
+  "require": {}
+}

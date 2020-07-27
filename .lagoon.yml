@@ -1,0 +1,27 @@
+docker-compose-yaml: docker-compose.yml
+
+project: govcms9
+
+tasks:
+
+  post-rollout:
+    - run:
+        name: drush cim
+        command: drush -y cim
+        service: cli
+    - run:
+        name: drush updb
+        command: drush -y updb
+        service: cli
+    - run:
+        name: drush cr
+        command: drush -y cr
+        service: cli
+
+environments:
+  main:
+    cronjobs:
+      - name: drush cron
+        schedule: "*/15 * * * *"
+        command: drush cron
+        service: cli

@@ -1,0 +1,43 @@
+ARG CLI_IMAGE
+ARG LAGOON_IMAGE_VERSION
+ARG PHP_IMAGE_VERSION
+FROM ${CLI_IMAGE} as cli
+
+FROM amazeeio/php:${PHP_IMAGE_VERSION}-cli-drupal-${LAGOON_IMAGE_VERSION}
+
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+COPY --from=cli /app /app
+
+RUN cp -r /app/profiles/govcms/tests /app/ \
+    && echo "memory_limit=-1" >> /usr/local/etc/php/conf.d/memory.ini \
+    && composer install -d /app/tests -n --ansi --prefer-dist --no-suggest \
+    && composer clearcache \
+    && drush dl drupalorg_drush-7.x-1.x-dev -y \
+    && rm -rf /usr/local/etc/php/conf.d/memory.ini \
+    && mv /app/profiles/govcms/.docker/lint-govcms /usr/bin/lint-govcms \
+    && chmod +x /usr/bin/lint-govcms \
+    && mv /app/profiles/govcms/.docker/lint-theme /usr/bin/lint-theme \
+    && chmod +x /usr/bin/lint-theme \
+    && mv /app/profiles/govcms/.docker/behat /usr/bin/behat \
+    && chmod +x /usr/bin/behat \
+    && mv /app/profiles/govcms/.docker/phpunit /usr/bin/phpunit \
+    && chmod +x /usr/bin/phpunit
+
+COPY images/test/7.x/scripts/drutiny /usr/bin/drutiny
+COPY --from=cli /etc/my.cnf.d /etc/my.cnf.d
+
+ARG SITE_AUDIT_VERSION
+
+RUN git clone --single-branch --branch=$SITE_AUDIT_VERSION https://github.com/govcms/audit-site.git /app/sites/all/drutiny \
+    && php -d memory_limit=-1 /usr/local/bin/composer --working-dir=/app/sites/all/drutiny/ install --ignore-platform-reqs \
+    && rm -Rf /app/sites/all/drutiny/.git \
+    && chmod +x /usr/bin/drutiny \
+    && apk --no-cache add findutils
+# findutils can be removed after amazeeio/lagoon PR1077
+
+# Add custom drutiny profiles into test for local testing
+COPY images/test/7.x/config/*.profile.yml /app/sites/all/drutiny/Profiles

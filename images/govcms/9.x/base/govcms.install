@@ -1,0 +1,122 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the GovCMS installation profile.
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\shortcut\Entity\Shortcut;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
+
+/**
+ * Define a default theme constant.
+ */
+define('GOVCMS_DEFAULT_THEME', 'govcms_bartik');
+
+/**
+ * Define the admin theme.
+ */
+define('GOVCMS_DEFAULT_ADMIN_THEME', 'claro');
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for govCMS Profile.
+ *
+ * @see system_install()
+ */
+function govcms_install() {
+  // Restrict user registration to admin role creation.
+  \Drupal::configFactory()
+    ->getEditable('user.settings')
+    ->set('register', \Drupal\user\UserInterface::REGISTER_ADMINISTRATORS_ONLY)
+    ->save(TRUE);
+
+  // Create default node.
+  Node::create([
+    'type' => 'govcms_standard_page',
+    'title' => 'Welcome to GovCMS',
+    'body' => 'GovCMS is a content management systems maintained by the Australian Government Department of Finance and available to all levels of the Australian government.',
+  ])->save();
+
+  // Set front page to "node".
+  \Drupal::configFactory()
+    ->getEditable('system.site')
+    ->set('page.front', '/node/1')
+    ->save(true);
+
+  // Populate the default shortcut set.
+  Shortcut::create(
+    [
+      'shortcut_set' => 'default',
+      'title' => t('Add content'),
+      'weight' => 1,
+      'link' => ['uri' => 'internal:/node/add'],
+    ]
+  )->save();
+
+  MenuLinkContent::create(
+    [
+    'title' => 'Accessibility',
+    'link' => ['uri' => 'internal:/node/1'],
+    'menu_name' => 'footer',
+  ]
+  )->save();
+
+  MenuLinkContent::create(
+    [
+      'title' => 'Copyright',
+      'link' => ['uri' => 'internal:/node/1'],
+      'menu_name' => 'footer',
+    ]
+  )->save();
+
+  MenuLinkContent::create(
+    [
+      'title' => 'Disclaimers',
+      'link' => ['uri' => 'internal:/node/1'],
+      'menu_name' => 'footer',
+    ]
+  )->save();
+
+  MenuLinkContent::create(
+    [
+      'title' => 'Privacy',
+      'link' => ['uri' => 'internal:/node/1'],
+      'menu_name' => 'footer',
+    ]
+  )->save();
+
+  MenuLinkContent::create([
+    'title' => 'Our community',
+    'link' => ['uri' => 'https://www.govcms.gov.au/our-community'],
+    'menu_name' => 'govcms-community',
+  ])->save();
+
+  MenuLinkContent::create([
+    'title' => 'About GovCMS',
+    'link' => ['uri' => 'https://www.govcms.gov.au/about'],
+    'menu_name' => 'govcms-about',
+  ])->save();
+
+  // Don't do anything else during config sync.
+  if (\Drupal::isConfigSyncing()) {
+    return;
+  }
+
+  // Set the default and admin theme.
+  \Drupal::configFactory()
+    ->getEditable('system.theme')
+    ->set('default', GOVCMS_DEFAULT_THEME)
+    ->set('admin', GOVCMS_DEFAULT_ADMIN_THEME)
+    ->save(TRUE);
+
+  // Enable the admin theme.
+  \Drupal::configFactory()
+    ->getEditable('node.settings')
+    ->set('use_admin_theme', TRUE)
+    ->save(TRUE);
+
+  drupal_flush_all_caches();
+}
