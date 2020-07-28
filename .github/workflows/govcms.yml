@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Create Docker Network
-        run: docker network create amazeeio-network
+        run: docker network ls | grep amazeeio-network || docker network create amazeeio-network
       - name: Build GovCMS
         run: docker-compose -p govcms7 build --no-cache
       - name: Start GovCMS
@@ -45,7 +45,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Create Docker Network
-        run: docker network create amazeeio-network
+        run: docker network ls | grep amazeeio-network || docker network create amazeeio-network
       - name: Build GovCMS
         run: docker-compose -p govcms8 build --no-cache
       - name: Start GovCMS
@@ -67,7 +67,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Create Docker Network
-        run: docker network create amazeeio-network
+        run: docker network ls | grep amazeeio-network || docker network create amazeeio-network
       - name: Build GovCMS
         run: docker-compose -p govcms9 build --no-cache
       - name: Start GovCMS

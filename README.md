@@ -27,7 +27,7 @@ $ drush uli
 
 ### Notes
 
-The pipeline will give you three sets of dissimilar images, one for GovCMS 7, 8 and 9. These will be reflected as `govcms7lagoon/*`, `govcms8lagoon/*` and `govcms9lagoon/*` `DOCKERHUB_NAMESPACE` variable. These artifacts can be re-tagged or scripted as necessary.
+The pipeline will give you three sets of dissimilar images, one for GovCMS 7, 8 and 9. These will be reflected as `govcms7lagoon/*`, `govcms8lagoon/*` and `govcms9lagoon/*` because of the specified `DOCKERHUB_NAMESPACE` variable. These artifacts can be re-tagged or scripted as necessary.
 
 ## License
 
